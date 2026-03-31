@@ -12,13 +12,13 @@ export default class newsContent extends Component {
      
      
     };
-    get apikey  () {return process.env.NEWSLETTER_APIKEY}
+    get apikey  () {return process.env.REACT_APP_NEWSLETTER_APIKEY}
     
     nextCheck = async () =>{
-        const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${this.apikey}&page=${this.state.page+1}`)
+        const res =  await fetch(`api/news?page=${this.state.page+1}`)
         this.localdata = await res.json()
         console.log(this.localdata.articles.length)
-        this.setState({lastPage: this.localdata.articles.length === 0 },()=>{console.log(this.state.lastPage)
+        this.setState({lastPage: this.localdata.articles.length === 0 || this.state.page > 4},()=>{console.log(this.state.lastPage)
             
         })
         
@@ -27,7 +27,7 @@ export default class newsContent extends Component {
   loadPagedata = async () =>{
         this.props.loader(true)
    
-          const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${this.apikey}&page=${this.state.page}`)
+          const res =  await fetch(`/api/news?page=${this.state.page}`)
         this.setState({data : await res.json()},
     ()=>{
         this.max = this.state.data.articles.length
@@ -51,7 +51,7 @@ export default class newsContent extends Component {
 
              {return ( <div onClick={()=>{window.open(item.url,"_blank")}} key={item.url}  className={`dark:shadow-gray-700 dark:shadow-sm dark:bg-black dark:text-white cursor-pointer rounded-xl shadow-md py-2shadow-sm border-gray-700 border-[1px] overflow-hidden`}>
         <div className="relative">
-            <img className="w-full h-48 object-cover" src={item.urlToImage ? item.urlToImage : noimg} alt="newsImage" />
+            <img className="w-full h-48 object-cover" src={item.image ? item.image : noimg} alt="newsImage" />
             <div className="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md">New
             </div>
             <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">3 min read
