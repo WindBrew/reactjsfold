@@ -17,8 +17,8 @@ export default class newsContent extends Component {
     nextCheck = async () =>{
         const res =  await fetch(`/api/news?page=${this.state.page+1}`)
         this.localdata = await res.json()
-        console.log(this.localdata.results.length)
-        this.setState({lastPage: this.localdata.results.length === 0 || this.state.page > 4},()=>{console.log(this.state.lastPage)
+        console.log(this.localdata.response.results.length)
+        this.setState({lastPage: this.localdata.response.results.length === 0 || this.state.page > 4},()=>{console.log(this.state.lastPage)
             
         })
         
@@ -30,7 +30,7 @@ export default class newsContent extends Component {
           const res =  await fetch(`/api/news?page=${this.state.page}`)
         this.setState({data : await res.json()},
     ()=>{
-        this.max = this.state.data.results.length
+        this.max = this.state.datalocaldata.response.results.length
         console.log(this.max,"full")
         while(this.max % 3 !== 0){
             this.max -= 1
@@ -42,7 +42,7 @@ export default class newsContent extends Component {
         // here after they are seperate they check dont pass because and doesnt get reversed 
         //another approach would be doing !== on both sides instead of !()
         
-         this.state.data.results.slice(0,this.max).map((item) =>
+         this.state.datalocaldata.response.results.slice(0,this.max).map((item) =>
             // if u do onEvent = () => func then it is valid but if u do directly
          //onEvent = func then it runs once immedietly on assignment
          //use window.location.href when u want link to open in the current tab replacing the current window
