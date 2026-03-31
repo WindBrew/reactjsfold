@@ -26,11 +26,12 @@ export default class newsContent extends Component {
     }
   loadPagedata = async () =>{
         this.props.loader(true)
-   
+
           const res =  await fetch(`/api/news?page=${this.state.page}`)
         this.setState({data : await res.json()},
-    ()=>{
-        this.max = this.state.datalocaldata.response.results.length
+      
+    ()=>{  console.log(this.state.data);
+        this.max = this.state.data.response.results.length
         console.log(this.max,"full")
         while(this.max % 3 !== 0){
             this.max -= 1
