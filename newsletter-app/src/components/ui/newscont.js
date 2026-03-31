@@ -15,7 +15,7 @@ export default class newsContent extends Component {
     get apikey  () {return process.env.REACT_APP_NEWSLETTER_APIKEY}
     
     nextCheck = async () =>{
-        const res =  await fetch(`api/news?page=${this.state.page+1}`)
+        const res =  await fetch(`/api/news?page=${this.state.page+1}`)
         this.localdata = await res.json()
         console.log(this.localdata.articles.length)
         this.setState({lastPage: this.localdata.articles.length === 0 || this.state.page > 4},()=>{console.log(this.state.lastPage)
