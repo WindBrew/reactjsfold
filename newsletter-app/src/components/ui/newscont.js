@@ -51,7 +51,7 @@ export default class newsContent extends Component {
 
              {return ( <div onClick={()=>{window.open(item.url,"_blank")}} key={item.url}  className={`dark:shadow-gray-700 dark:shadow-sm dark:bg-black dark:text-white cursor-pointer rounded-xl shadow-md py-2shadow-sm border-gray-700 border-[1px] overflow-hidden`}>
         <div className="relative">
-            <img className="w-full h-48 object-cover" src={item.image ? item.image : noimg} alt="newsImage" />
+            <img className="w-full h-48 object-cover" src={item.urlToImage ? item.urlToImage : noimg} alt="newsImage" />
             <div className="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md">New
             </div>
             <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">3 min read

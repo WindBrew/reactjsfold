@@ -1,7 +1,22 @@
  
 export default async function handler (req,res){
    
-    const response =  await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=en&country=us&max=10&apikey=${process.env.REACT_APP_NEWSLETTER_APIKEY}&page=${req.query.page}`)
+    const response =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.REACT_APP_NEWSLETTER_APIKEY}&page=${req.query.page}`)
         const data = await response.json()
         return res.json(data)
 }
+//this is imp whenever you do fetch
+//in back a server after the url the parameters begin after ?
+//so it splits url from parameter cluster after ? and splits parameters by &
+//if u have a function asking for req or parameters in req is just a var not necessarily to be req
+//well as i was saying it will pass in the first param of the func
+//its req object that will look like
+// req = {
+//     query : {parameters / page : x , category: x}
+// } 
+//so when u do req or x.query.page you get this page and if the call passed anything after ? 
+//it returns it in the x here via as we discussed
+//returns req obj and we here called req.query.page
+//thats how it splits and stores whatever it gets in fetch call
+//and if called like we did its used else just stored not used no issue
+//we used to manipulate page numbers 
