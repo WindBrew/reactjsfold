@@ -12,9 +12,10 @@ export default class newsContent extends Component {
      
      
     };
+    get apikey  () {return process.env.NEWSLETTER_APIKEY}
     
     nextCheck = async () =>{
-        const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2eda292c7fed4265a609cedef6418c2f&page=${this.state.page+1}`)
+        const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${this.apikey}&page=${this.state.page+1}`)
         this.localdata = await res.json()
         console.log(this.localdata.articles.length)
         this.setState({lastPage: this.localdata.articles.length === 0 },()=>{console.log(this.state.lastPage)
@@ -26,7 +27,7 @@ export default class newsContent extends Component {
   loadPagedata = async () =>{
         this.props.loader(true)
    
-          const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2eda292c7fed4265a609cedef6418c2f&page=${this.state.page}`)
+          const res =  await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${this.apikey}&page=${this.state.page}`)
         this.setState({data : await res.json()},
     ()=>{
         this.max = this.state.data.articles.length
