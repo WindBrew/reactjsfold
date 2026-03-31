@@ -43,7 +43,7 @@ export default class newsContent extends Component {
         // here after they are seperate they check dont pass because and doesnt get reversed 
         //another approach would be doing !== on both sides instead of !()
         
-         this.state.datalocaldata.response.results.slice(0,this.max).map((item) =>
+         this.state.data.response.results.slice(0,this.max).map((item) =>
             // if u do onEvent = () => func then it is valid but if u do directly
          //onEvent = func then it runs once immedietly on assignment
          //use window.location.href when u want link to open in the current tab replacing the current window
