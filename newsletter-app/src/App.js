@@ -1,0 +1,148 @@
+import "./App.css";
+import Navbar from "./components/ui/navbar";
+// import IndexPage from "./components/indexpagecontent";
+import NewsContent from "./components/ui/newscont";
+import StartPage from "./components/ui/startPage";
+import Plans from "./components/ui/plans";
+import Loader from "./components/ui/loader";
+import {saveData,loadData} from "./components/utils/storage";
+import { logout } from "./components/utils/logout";
+import { planData } from "./components/utils/planData";
+import {counterInitiate} from "./components/utils/counter";
+import { setSub } from "./components/utils/setSubscriber";
+import { expirationTimer } from "./components/utils/expiration";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import React, { Component } from "react";
+
+//next step is to divide this logic in utils file
+//usable logic shall live there with easy readibility
+//no fuss or confusion easy to maintain and modify and debug
+//and is sustained by itself when complexity increases
+//tomorrow is a journey not to build as you reached
+//the peak a new level unlocked well thats the point
+//new level (btw keep it readable code easy to understand)
+//a journey of rearrangement and organizing what we built
+//to the advanced
+export default class App extends Component {
+  state = {
+    email : "",
+    subscriber: loadData(), 
+    
+    // loginCount : JSON.parse(localStorage.getItem("Subscribedthis.userbase")).subscribers.map((subs) =>{
+    //   return {subs : 0}
+    // }) later make a login count system
+     counter : 0,
+     togglePlanNews: false,
+     isloggedIn: false,
+      }
+      get user(){ // use get func when u dont wanna pass parameters and call it directly
+        //not preffered for complex funcs as it can be confusing
+        //clean for returning simple outputs just clean
+        //i used it to obtain a global val
+         return this.state.subscriber[this.state.email]
+      }
+   
+  
+  
+  setMails = (mails)=>{
+    //react setState runs like setState(updates , callback) why call back?
+    //so that the function doesnt run too soon on the old state but runs after the 
+// state is updated , useful for state dependant functions to run instantly instead
+//of needing a second run to act on the updated state
+//just runs a function after the state updates , avoids reading prev state and only updated state
+// for state reliant functions  
+    this.setState({email: (mails)}, () => {
+        console.log(this.state.email)
+         
+     
+      console.log("after mail rec",this.state.loader)
+      this.setState({togglePlanNews: false,isloggedIn: true},()=>{this.checkUser()})
+        }) 
+        
+         
+       
+  }
+
+    planPage = (bool) =>{// using arrow funcs ensure
+      // your this is bound to parent (app)
+      //else it passes an error that this is not found
+      //a normal planPage(){} would not bind this to parent
+      //but a planPage = () =>{} some react magic 
+      
+        this.setState({togglePlanNews: bool})// displays plan page 
+    }
+  
+
+  
+    //read at top if u havent
+ checkUser = () => { 
+  
+  
+  console.log(this.state.email)
+    console.log(this.state.subscriber)
+     console.log("This local storage as whole 1 : ",loadData())
+    if(  this.user && this.user.plan === "Subscribed" && this.user.expiry > 0) {
+      
+      console.log("reachingMatched")
+        console.log("matched")
+        this.setState({togglePlanNews: true}
+
+        ) // made home page display
+        //condition false as soon as page gets displayed by it being true so that it doesn't prevent
+        //other pages from loading 17-03-26
+        
+       expirationTimer(this,saveData,counterInitiate,setSub)//keep eye for inf loops // fix for expiration its not working ???
+        
+
+
+
+}
+else if(!(this.user)){ // used to define the mail in database even with plan being none
+   
+  console.log("Not a subscriber yet",this.state.subscriber)
+   setSub(this,"none",0,saveData)
+}   
+
+}
+doLoad = (load) =>{
+  this.setState({loader: load})
+ 
+}
+  render() {
+    
+      //read at top if u havent
+  
+    return (
+      <Router>
+      <div className="dark:bg-black dark:text-white h-full w-full flex-[1_0_auto]">
+      
+      {this.state.loader && <Loader/>}
+     
+        <Routes>
+        <Route path="/" index element = {<StartPage mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
+      
+        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday" planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent loader = {this.doLoad}/>  </>}/>  
+        <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
+        </Routes>
+       {this.state.isloggedIn ? 
+         (this.state.togglePlanNews? 
+          (<Navigate to="/NewsPage"/>) : (<Navigate to="/Plans"/>)
+        
+          ) : (<Navigate to="/"/>)
+    }
+      </div>
+      
+      </Router>
+    );
+  }
+     
+}
+
+// note for nextt togglePlanNews - store login status in local storage add multiple subscribers and make the plans page pop up if 
+// subscription status is not sub and add loading checking api status and element loaded ? if no show loading
