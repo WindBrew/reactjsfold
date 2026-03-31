@@ -60,7 +60,7 @@ export default class newsContent extends Component {
         </div>
         <div className="p-4">
             <div className="text-lg font-medium text-gray-800 mb-2 ">{item.webTitle}</div>
-            <p className="text-gray-500 text-sm">{item.fields.trialText ? item.fields.trialText : "no description..." }</p>
+            <p className="text-gray-500 text-sm">{item.fields.trailText ? item.fields.trailText : "no description..." }</p>
         </div>
     </div>)
     }
