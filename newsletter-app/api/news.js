@@ -1,7 +1,7 @@
  
 export default async function handler (req,res){
    
-    const response =  await fetch(`https://content.guardianapis.com/search?api-key=${process.env.REACT_APP_NEWSLETTER_APIKEY}&page=${req.query.page}&show-fields=thumbnail,trialText`)
+    const response =  await fetch(`https://content.guardianapis.com/search?api-key=${process.env.REACT_APP_NEWSLETTER_APIKEY}&page=${req.query.page}&show-fields=thumbnail,trailText`)
         const data = await response.json()
         return res.json(data)
 }
