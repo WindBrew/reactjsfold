@@ -1,8 +1,7 @@
  
 export default async function handler (req,res){
    
-    const response =  await fetch(`https://content.guardianapis.com/search?api-key=${process.env.REACT_APP_NEWSLETTER_APIKEY}
-        &page={req.query.page}&show-fields=thumbnail,trialText`)
+    const response =  await fetch(`https://content.guardianapis.com/search?api-key=${process.env.REACT_APP_NEWSLETTER_APIKEY}&page=${req.query.page}&show-fields=thumbnail,trialText`)
         const data = await response.json()
         return res.json(data)
 }
@@ -21,3 +20,5 @@ export default async function handler (req,res){
 //thats how it splits and stores whatever it gets in fetch call
 //and if called like we did its used else just stored not used no issue
 //we used to manipulate page numbers 
+//note : never break a url in two lines inside a template lliteral for better readability
+//else it will literally go to next line and divide the url into 2 cus its template literals
