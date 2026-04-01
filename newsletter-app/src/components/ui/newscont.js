@@ -9,11 +9,18 @@ export default class newsContent extends Component {
         page: 1,
         lastPage: false,
         data : {},
+        date: new Date()
        
        
      
      
     };
+    checkNew = (targetDate) =>{
+        //no need to split new Date handles iso dates
+        //use new Date if u use just Date it wont give proper millisecs for calc
+       
+        return (this.state.date - new Date(targetDate))/(1000*60*60*24 )
+    }
    
     get apikey  () {return process.env.REACT_APP_NEWSLETTER_APIKEY}
     
@@ -57,8 +64,12 @@ export default class newsContent extends Component {
              {return ( <div onClick={()=>{window.open(item.webUrl,"_blank")}} key={item.webUrl}  className={`dark:shadow-gray-700 dark:shadow-sm dark:bg-black dark:text-white cursor-pointer rounded-xl shadow-md py-2shadow-sm border-gray-700 border-[1px] overflow-hidden`}>
         <div className="relative">
             <img className="w-full h-48 object-cover" src={item.fields.thumbnail ? item.fields.thumbnail : noimg} alt="newsImage" />
-            <div className="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md">New
+            {this.checkNew(item.fields.lastModified) <= 1 &&
+            <div className="absolute top-0 right-0 bg-indigo-500 text-white 
+            font-bold px-2 py-1 m-2 rounded-md">
+                New
             </div>
+             }
             <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">{Math.ceil(item.fields.wordcount /200)} min's read
             </div>
         </div>
