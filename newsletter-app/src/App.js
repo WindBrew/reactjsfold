@@ -40,6 +40,7 @@ export default class App extends Component {
      counter : 0,
      togglePlanNews: false,
      isloggedIn: false,
+     category: ""
       }
       get user(){ // use get func when u dont wanna pass parameters and call it directly
         //not preffered for complex funcs as it can be confusing
@@ -68,7 +69,10 @@ export default class App extends Component {
          
        
   }
-
+  passCategory = (category) =>{
+    this.setState({category: category},()=>console.log(this.state.category))  
+    
+  }
     planPage = (bool) =>{// using arrow funcs ensure
       // your this is bound to parent (app)
       //else it passes an error that this is not found
@@ -76,6 +80,7 @@ export default class App extends Component {
       //but a planPage = () =>{} some react magic 
       
         this.setState({togglePlanNews: bool})// displays plan page 
+        
     }
   
 
@@ -127,7 +132,7 @@ doLoad = (load) =>{
         <Routes>
         <Route path="/" index element = {<StartPage mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
-        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday" planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent loader = {this.doLoad}/>  </>}/>  
+        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday" category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
         </Routes>
        {this.state.isloggedIn ? 

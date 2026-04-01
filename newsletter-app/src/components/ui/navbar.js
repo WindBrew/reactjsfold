@@ -5,6 +5,56 @@ export default class navbar extends Component {
    toggles = () =>{
     this.props.planToggle(false)
    }
+   state = {
+    categories : false,
+    active: null,
+    cats: ["All",
+      'World',
+  'Politics', 
+  'Technology',
+  'Science',
+  'Business',
+  'Football',
+  'Sport',
+  'Film',
+  'Music',
+  'Books',
+  'Fashion',
+  'Food',
+  'Travel',
+  'Environment',
+  'Education',
+  'Health',
+  'Society',
+  'Law',
+  'Media',
+  'Opinion']
+    
+   }
+ 
+
+   //add lowercaser for  rest of e.target.content
+  
+  passCategory = (e) => {
+    this.setState({active: e.target.textContent})
+    if (e.target.textContent !== 'Sports'){
+    this.props.category(e.target.textContent.toLowerCase())
+    
+    }
+    else if((e.target.textContent === 'Sports')){
+      this.props.category('sport')
+      
+    }
+}
+  loadCategories = () =>{
+    return(
+    this.state.cats.map(item=>{
+                return(
+                      <div className={`${this.state.active === item ? "text-blue-900" : ""} hover:text-blue-900 hover:cursor-pointer`} 
+                      onClick={(e)=>{this.passCategory(e); this.setState({categories: false})}}>{item}</div>
+                    
+     ) })
+   )}
   render() {
     return (
       <div className="w-full bg-black fixed z-40 ">
@@ -44,8 +94,19 @@ export default class navbar extends Component {
               />
             </svg>
           </button>
-          <div className="hidden w-full md:flex md:w-auto" id="navbar-default">
+          <div className="hidden w-full select-none md:flex md:w-auto" id="navbar-default">
             <ul className=" font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+              <li>
+                <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : this.state.categories ? false : true})}}>Categories</span>
+                {"   "}
+                {
+                this.state.categories && <div className="absolute bg-black border-none rounded-md p-4">
+                  <div className="grid grid-cols-3 span-col-2 gap-x-4 gap-y-4">
+                    {this.loadCategories()}
+                    </div>
+                      </div>
+                      }
+                 </li>
               <li >
                 <NavLink to="/Plans"
                 end

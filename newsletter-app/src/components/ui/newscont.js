@@ -9,9 +9,12 @@ export default class newsContent extends Component {
         page: 1,
         lastPage: false,
         data : {},
+       
+       
      
      
     };
+   
     get apikey  () {return process.env.REACT_APP_NEWSLETTER_APIKEY}
     
     nextCheck = async () =>{
@@ -26,8 +29,9 @@ export default class newsContent extends Component {
     }
   loadPagedata = async () =>{
         this.props.loader(true)
+      
 
-          const res =  await fetch(`/api/news?page=${this.state.page}`)
+          const res =  await fetch(`/api/news?page=${this.state.page}${this.props.category && this.props.category !== "all" ? `&section=${this.props.category}` : ""}`)
         this.setState({data : await res.json()},
       
     ()=>{  console.log(this.state.data);
@@ -55,7 +59,7 @@ export default class newsContent extends Component {
             <img className="w-full h-48 object-cover" src={item.fields.thumbnail ? item.fields.thumbnail : noimg} alt="newsImage" />
             <div className="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md">New
             </div>
-            <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">3 min read
+            <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">{Math.ceil(item.fields.wordcount /200)} min's read
             </div>
         </div>
         <div className="p-4">
@@ -66,7 +70,7 @@ export default class newsContent extends Component {
     }
 
 );
-    setTimeout(()=>{ this.props.loader(false)},300)
+    this.props.loader(false)
    
     
     }
@@ -86,6 +90,13 @@ export default class newsContent extends Component {
         console.log("reached news content")
   
        
+    }
+    async componentDidUpdate(x){
+        if(x.category !== this.props.category){
+            this.setState({page: 1},()=>{
+                this.loadPagedata()
+            })
+        }
     }
     windowToTop = () =>{
         window.scrollTo({top: 0,behavior:'smooth'}) 
