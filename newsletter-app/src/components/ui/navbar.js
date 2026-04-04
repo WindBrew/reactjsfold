@@ -7,7 +7,7 @@ export default class navbar extends Component {
    }
    state = {
     categories : false,
-    active: null,
+    active: "All",
     cats: ["All",
       'World',
   'Politics', 
@@ -29,6 +29,8 @@ export default class navbar extends Component {
   'Law',
   'Media',
   'Opinion']
+  ,
+
     
    }
  
@@ -50,15 +52,15 @@ export default class navbar extends Component {
     return(
     this.state.cats.map(item=>{
                 return(
-                      <div className={`${this.state.active === item ? "text-blue-900" : ""} hover:text-blue-900 hover:cursor-pointer`} 
+                      <div className={`${this.state.active === item ? "text-blue-900" : ""} hover:text-blue-700 hover:cursor-pointer`} 
                       onClick={(e)=>{this.passCategory(e); this.setState({categories: false})}}>{item}</div>
                     
      ) })
    )}
   render() {
     return (
-      <div className="w-full bg-black fixed z-40 ">
-      <nav className={` bg-black  w-full  top-0 start-0 border-b border-default`}>
+      <div className="w-full bg-white text-black dark:text-white dark:bg-black fixed z-40 ">
+      <nav className={`  w-full  top-0 start-0 border-b border-default`}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <h4
             
@@ -95,13 +97,15 @@ export default class navbar extends Component {
             </svg>
           </button>
           <div className="hidden w-full select-none md:flex md:w-auto" id="navbar-default">
+
             <ul className=" font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+             
               <li>
                 <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : this.state.categories ? false : true})}}>Categories</span>
                 {"   "}
                 {
-                this.state.categories && <div className="absolute bg-black border-none rounded-md p-4">
-                  <div className="grid grid-cols-3 span-col-2 gap-x-4 gap-y-4">
+                this.state.categories && <div className="absolute bg-white dark:bg-black border-none rounded-md p-4">
+                  <div className="grid text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
                     {this.loadCategories()}
                     </div>
                       </div>

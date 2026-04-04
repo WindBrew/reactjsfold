@@ -5,6 +5,15 @@ localStorage.setItem('SubscribedUserbase' , JSON.stringify(
     
 ) 
 )}
+if(!localStorage.getItem("theme",JSON)){
+    localStorage.setItem("theme",JSON.stringify("light"))
+}
+export const saveTheme = (theme)=>{
+    localStorage.setItem("theme",JSON.stringify(theme ? "dark" : ""))
+} 
+export const fetchTheme = ()=>{
+    return JSON.parse(localStorage.getItem("theme"))
+}
 export const saveData = (data) =>{
     localStorage.setItem("SubscribedUserbase",JSON.stringify(data))
 }

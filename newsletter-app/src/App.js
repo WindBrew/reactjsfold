@@ -5,7 +5,7 @@ import NewsContent from "./components/ui/newscont";
 import StartPage from "./components/ui/startPage";
 import Plans from "./components/ui/plans";
 import Loader from "./components/ui/loader";
-import {saveData,loadData} from "./components/utils/storage";
+import {saveData,loadData,saveTheme, fetchTheme} from "./components/utils/storage";
 import { logout } from "./components/utils/logout";
 import { planData } from "./components/utils/planData";
 import {counterInitiate} from "./components/utils/counter";
@@ -40,7 +40,8 @@ export default class App extends Component {
      counter : 0,
      togglePlanNews: false,
      isloggedIn: false,
-     category: ""
+     category: "",
+     dark: false
       }
       get user(){ // use get func when u dont wanna pass parameters and call it directly
         //not preffered for complex funcs as it can be confusing
@@ -115,24 +116,66 @@ else if(!(this.user)){ // used to define the mail in database even with plan bei
 }   
 
 }
+setTheme = () =>{
+  this.setState({dark: !this.state.dark},
+    ()=>{saveTheme(this.state.dark);
+    console.log("toggling func");
+    if(fetchTheme() === "dark"){
+    document.documentElement.classList.add("dark")
+    }
+  else if(fetchTheme() === ""){
+    document.documentElement.classList.remove("dark")
+  }
+    
+    }
+  )
+  
+}
+
 doLoad = (load) =>{
   this.setState({loader: load})
  
 }
+componentDidMount(){
+  if(fetchTheme() === "dark"){
+    document.documentElement.classList.add("dark") 
+    this.setState({dark: true})
+  }
+}
+
   render() {
     
       //read at top if u havent
-  
+    //fix the button overlapping logout button in newscontpage
+    //add a no news page for empty categories as some categories 
+    // aren't always updated with new news
     return (
       <Router>
-      <div className="dark:bg-black dark:text-white h-full w-full flex-[1_0_auto]">
+      <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
+    
+         <div className="top-2 right-0 fixed z-50"> 
+                   <span className="px-4">Light</span>
+                <button
+      onClick={() => this.setTheme()}
+      className={`relative inline-flex items-center w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none ${
+        this.state.dark ? "bg-blue-900" : "bg-yellow-300"
+      }`}
+    >
+      <span
+        className={`inline-block w-3 h-3 bg-slate-200 rounded-full shadow transform transition-transform duration-300 ${
+          this.state.dark ? "translate-x-7" : "translate-x-1"
+        }`}
+      />
+    </button>
+    <span className="px-4">Dark</span>
+              </div>
       
       {this.state.loader && <Loader/>}
      
         <Routes>
         <Route path="/" index element = {<StartPage mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
-        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday" category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
+        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday"  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
         </Routes>
        {this.state.isloggedIn ? 

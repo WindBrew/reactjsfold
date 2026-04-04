@@ -105,6 +105,7 @@ export default class newsContent extends Component {
     async componentDidUpdate(x){
         if(x.category !== this.props.category){
             this.setState({page: 1},()=>{
+                 this.windowToTop()
                 this.loadPagedata()
             })
         }
@@ -132,7 +133,7 @@ export default class newsContent extends Component {
       <div className='flex flex-col pt-[65px] w-full h-full'>
         
             <>
-            <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 bg-black">
+            <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 bg-white text-black dark:text-white dark:bg-black">
     {this.newsContdata}
     
     </div>

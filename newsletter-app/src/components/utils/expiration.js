@@ -16,6 +16,7 @@ export const expirationTimer = (comp,saveData,counter,subUpdtr) =>{
               comp.checkUser()
               comp.setState({counter: 0,togglePlanNews: false})
               clearInterval(comp.timecount)
+              comp.passCategory("all")
             },4000)
           }, comp.state.subscriber[comp.state.email].expiry)
        
