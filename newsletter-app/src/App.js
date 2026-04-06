@@ -32,13 +32,14 @@ import React, { Component } from "react";
 export default class App extends Component {
   state = {
     email : "",
-    subscriber: loadData(), 
+    subscriber: loadData(),
+   
     
     // loginCount : JSON.parse(localStorage.getItem("Subscribedthis.userbase")).subscribers.map((subs) =>{
     //   return {subs : 0}
     // }) later make a login count system
      counter : 0,
-     togglePlanNews: false,
+     togglePlanNews: "Plans",
      isloggedIn: false,
      category: "",
      dark: false
@@ -64,7 +65,7 @@ export default class App extends Component {
          
      
       console.log("after mail rec",this.state.loader)
-      this.setState({togglePlanNews: false,isloggedIn: true},()=>{this.checkUser()})
+      this.setState({togglePlanNews: "Plans",isloggedIn: true},()=>{this.checkUser()})
         }) 
         
          
@@ -97,7 +98,7 @@ export default class App extends Component {
       
       console.log("reachingMatched")
         console.log("matched")
-        this.setState({togglePlanNews: true}
+        this.setState({togglePlanNews: "News"}
 
         ) // made home page display
         //condition false as soon as page gets displayed by it being true so that it doesn't prevent
@@ -153,7 +154,7 @@ componentDidMount(){
       <Router>
       <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
     
-         <div className="top-2 right-0 fixed z-50"> 
+         <div className={`${this.state.togglePlanNews==="Plans" ? "top-2 right-0" : "top-4 right-[40%]"} absolute z-50`}> 
                    <span className="px-4">Light</span>
                 <button
       onClick={() => this.setTheme()}
@@ -175,11 +176,11 @@ componentDidMount(){
         <Routes>
         <Route path="/" index element = {<StartPage mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
-        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsToday"  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
+        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsBy10Tacles"  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
         </Routes>
        {this.state.isloggedIn ? 
-         (this.state.togglePlanNews? 
+         (this.state.togglePlanNews==="News"? 
           (<Navigate to="/NewsPage"/>) : (<Navigate to="/Plans"/>)
         
           ) : (<Navigate to="/"/>)

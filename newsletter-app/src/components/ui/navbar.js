@@ -3,7 +3,7 @@ import { NavLink} from "react-router-dom";
 
 export default class navbar extends Component {
    toggles = () =>{
-    this.props.planToggle(false)
+    this.props.planToggle("Plans")
    }
    state = {
     categories : false,
@@ -33,7 +33,10 @@ export default class navbar extends Component {
 
     
    }
- 
+
+     
+  
+
 
    //add lowercaser for  rest of e.target.content
   
@@ -48,6 +51,58 @@ export default class navbar extends Component {
       
     }
 }
+// explained reduce and some function nature here  
+//toDesignTitle = () =>{
+//   this.props.webTitle.reduce((acc , item) =>{
+//     //reduce fetches this.props.webTitle via acc= this
+// //     Array.prototype.reduce = function(callback, startingValue) {
+// //   let arr = this  // 'this' is the array before the dot
+// //   let acc = startingValue
+
+// //   for (let i = 0; i < arr.length; i++) {
+// //     acc = callback(acc, arr[i])
+// //   }
+
+// //   return acc
+// // }
+// //in the above working example of reduce func
+// //i shall elaborate why callback has an acc var inside it and when it can be ommited
+// //its there cus sometimes the callback needs the previous value for determining 
+// // and callback cannot access the main acc inside of main reduce func
+// //and for simple stuff or things where your values dont depend on previous and you just wanna add
+// //Array.prototype.reduce = function(callback, startingValue) {
+// //   let arr = this  // 'this' is the array before the dot
+// //   let acc = startingValue
+
+// //   for (let i = 0; i < arr.length; i++) {
+// //     acc += callback( arr[i])
+// //   }
+
+// //   return acc
+// // } works without the acc inside of callbck by adding the += in main func but 
+// //now the callback func cant read its prev val while acc did both adding and access to prev value
+    
+//   })
+// }
+toShowtitle = () =>{
+  return(
+  [...this.props.webTitle].map((item)=>{
+   if(["N","1","0"].includes(item)){
+    return (<span className="text-red-800 text-3xl">{item}</span>)
+
+   }
+  else if(["B","y"].includes(item)){
+    return (<span className="text-blue-600 text-2xl">{item}</span>)
+
+   }
+   else{
+    return (<span className="text-xl">{item}</span>)
+
+   }
+  
+}))
+  }
+
   loadCategories = () =>{
     return(
     this.state.cats.map(item=>{
@@ -59,16 +114,17 @@ export default class navbar extends Component {
    )}
   render() {
     return (
-      <div className="w-full bg-white text-black dark:text-white dark:bg-black fixed z-40 ">
-      <nav className={`  w-full  top-0 start-0 border-b border-default`}>
+      <div className="w-full  bg-white text-black dark:text-white dark:bg-black fixed z-40 ">
+      <nav className={`  w-full  top-0 start-0 shadow-lg dark:shadow-gray-900 dark:shadow-md `}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <h4
             
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
-             {this.props.webTitle}
+            <span className="self-center text-xl text-heading font-bold whitespace-nowrap">
+             {this.toShowtitle()}
             </span>
+            
           </h4>
           
           <button
