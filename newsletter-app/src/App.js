@@ -11,6 +11,7 @@ import { planData } from "./components/utils/planData";
 import {counterInitiate} from "./components/utils/counter";
 import { setSub } from "./components/utils/setSubscriber";
 import { expirationTimer } from "./components/utils/expiration";
+import Modetoggle from "./components/ui/modetoggleswitch";
 import {
   BrowserRouter as Router,
   Routes,
@@ -42,7 +43,8 @@ export default class App extends Component {
      togglePlanNews: "Plans",
      isloggedIn: false,
      category: "",
-     dark: false
+     dark: false,
+     webTitle: "NewsBy10Tacles"
       }
       get user(){ // use get func when u dont wanna pass parameters and call it directly
         //not preffered for complex funcs as it can be confusing
@@ -143,6 +145,24 @@ componentDidMount(){
     this.setState({dark: true})
   }
 }
+toShowtitle = () =>{
+  return(
+  [...this.state.webTitle].map((item)=>{
+   if(["N","1","0"].includes(item)){
+    return (<span className="text-red-800 text-3xl">{item}</span>)
+
+   }
+  else if(["B","y"].includes(item)){
+    return (<span className="text-blue-600 text-2xl">{item}</span>)
+
+   }
+   else{
+    return (<span className="text-xl">{item}</span>)
+
+   }
+  
+}))
+  }
 
   render() {
     
@@ -150,31 +170,20 @@ componentDidMount(){
     //fix the button overlapping logout button in newscontpage
     //add a no news page for empty categories as some categories 
     // aren't always updated with new news
+    //if you want the child to access the parents funcs return value
+    //passing it in prop as func() is valid else always pass the func without calling it via ()
+    //in cases where the parent has to pass args wrap it in a ()=>{func(args)} while sending as props
+    //
     return (
       <Router>
       <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
     
-         <div className={`${this.state.togglePlanNews==="Plans" ? "top-2 right-0" : "top-4 right-[40%]"} absolute z-50`}> 
-                   <span className="px-4">Light</span>
-                <button
-      onClick={() => this.setTheme()}
-      className={`relative inline-flex items-center w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none ${
-        this.state.dark ? "bg-blue-900" : "bg-yellow-300"
-      }`}
-    >
-      <span
-        className={`inline-block w-3 h-3 bg-slate-200 rounded-full shadow transform transition-transform duration-300 ${
-          this.state.dark ? "translate-x-7" : "translate-x-1"
-        }`}
-      />
-    </button>
-    <span className="px-4">Dark</span>
-              </div>
+     <Modetoggle darkCheck={this.state.dark} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
       
       {this.state.loader && <Loader/>}
      
         <Routes>
-        <Route path="/" index element = {<StartPage mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
+        <Route path="/" index element = {<StartPage webTitle="NewsBy10Tacles" mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
         <Route path="/NewsPage" element={<><Navbar webTitle = "NewsBy10Tacles"  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>

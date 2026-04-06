@@ -84,24 +84,20 @@ export default class navbar extends Component {
     
 //   })
 // }
-toShowtitle = () =>{
-  return(
-  [...this.props.webTitle].map((item)=>{
-   if(["N","1","0"].includes(item)){
-    return (<span className="text-red-800 text-3xl">{item}</span>)
+//explained why we pass callback(acc,arr[i]) 
+// acc starts at 0
+//   → callback gets (0, 1)  → returns 1   → main acc is now 1
+//   → callback gets (1, 2)  → returns 3   → main acc is now 3
+//   → callback gets (3, 3)  → returns 6   → main acc is now 6
+// done, return 6
+//in simple words the acc in sub or user func returns acc + array item
+//the main funcs acc stores the returned acc and returns the value to the
+//callback so callbacks acc always has a updated acc to add more value to until valid
+//and arr[i] is simply there to take each array item individually
+// someloop(x = func(x,y){return x+y}=> next session of loop x = func(x(=passes in the prev x+y 
+//that was returned by func and stored in x ) , y
+//))) 
 
-   }
-  else if(["B","y"].includes(item)){
-    return (<span className="text-blue-600 text-2xl">{item}</span>)
-
-   }
-   else{
-    return (<span className="text-xl">{item}</span>)
-
-   }
-  
-}))
-  }
 
   loadCategories = () =>{
     return(
