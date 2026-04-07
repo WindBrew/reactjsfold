@@ -104,6 +104,9 @@ export default class App extends Component {
 
     
   }
+  resetCategoryandpage = (cat,page)=>{
+    this.setState({category: cat,page: page})
+  }
     planPage = (bool) =>{// using arrow funcs ensure
       
       //else it passes an erro! that this isloggedIn && <Navigate to="/" replace />
@@ -134,7 +137,7 @@ export default class App extends Component {
         //condition false as soon as page gets displayed by it being true so that it doesn't prevent
         //other pages from loading 17-03-26
         
-       expirationTimer(this,saveData,counterInitiate,setSub)//keep eye for inf loops // fix for expiration its not working ???
+       expirationTimer(this,saveData,counterInitiate,setSub,this.resetCategoryandpage)//keep eye for inf loops // fix for expiration its not working ???
         
 
 

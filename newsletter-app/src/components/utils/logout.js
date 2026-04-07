@@ -8,7 +8,7 @@
         expiry: prevState.subscriber[prevState.email].expiry - prevState.counter}},
       
         
-        togglePlanNews: false,
+        togglePlanNews: "Plans",
         loader: true, 
         isloggedIn: false
       }
