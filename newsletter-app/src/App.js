@@ -166,7 +166,8 @@ toShowtitle = () =>{
    else{
     return (<span className="text-xl" key={index}>{item}</span>)
 
-   }
+   }//index is imp cus it needs to keep track every re render whether an element is there or gone
+   //and it does it via index
   
 }))
   }
@@ -191,7 +192,7 @@ toShowtitle = () =>{
       <Router>
       <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
     
-     <Modetoggle darkCheck={this.state.dark} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
+     <Modetoggle darkCheck={this.state.dark} loginStat={this.state.isloggedIn} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
       
       {this.state.loader && <Loader/>}
      
