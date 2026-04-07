@@ -9,7 +9,8 @@ export default class newsContent extends Component {
         page: 1,
         lastPage: false,
         data : {},
-        date: new Date()
+        date: new Date(),
+        newsContdata: ""
        
        
      
@@ -35,11 +36,36 @@ export default class newsContent extends Component {
         
     }
   loadPagedata = async () =>{
+    if(this.instance){
+        this.instance.abort(new Error("Deleted old instance"))//new Error is a js class and 
+        // new Error creates its object for us here its used to format whatever arg passed as an error msg 
+        //and return as an error object when logged to console
+        //theres also throw used for throwing errors 
+        //it sets whatever u pass in its parameter as arguement into an error format
+        //good for debugging and throwing your specific errors efficient in try catch
+    }//abort if an instance already exists aka kill it
+    //helps fix loading issues like switching categories too fast can cause multiple fetches
+    //this will kill all previous fetches till latest 
+    //the arg passed in abort parameter is just a reason nothing significant
+    //might help with not throwing the error 'aborted without a reason'
+    //we use try and catch to handle abortError as aborting a previous fetch will always throw an error
+    //not a critical error yet 
+    //here what i mean by  an error is if an error is unhandled
+    // it turns the page red overlay with error msg making ui unusable
+    //catch handles it like a champ and gives u info about the error in my case
+    //we can also use catch to act on whatever went wrong 
+    //abort("") error -> "" abort(new Error(""))-> Error: "" (formatted as error obj) abort() -> 
+    // (->AbortError: aborted without a reason)
+    //returns an error "signal aborted for no reason"
+
+    this.instance = new AbortController()//begin a new instance
         this.props.loader(true)
             console.log("called loader in newspage")
       
-
-          const res =  await fetch(`/api/news?page=${this.state.page}${this.props.category && this.props.category !== "all" ? `&section=${this.props.category}` : ""}`)
+    try{
+          const res =  await fetch(`/api/news?page=${this.state.page}${this.props.category && this.props.category !== "all" ? `&section=${this.props.category}` : ""}`,
+            {signal: this.instance.signal}
+          )
         this.setState({data : await res.json()},
       
     ()=>{  console.log(this.state.data);
@@ -49,7 +75,7 @@ export default class newsContent extends Component {
             this.max -= 1
             console.log(this.max)
         }
-        this.newsContdata = //when i used !(item.content === null && item.urlToImage === null) instead
+        this.setState({newsContdata : //when i used !(item.content === null && item.urlToImage === null) instead
         // it checked if both are not present instead of individual checking if either was present
         //it would bypass and get sent like image present content not true false = false then true 
         // here after they are seperate they check dont pass because and doesnt get reversed 
@@ -81,12 +107,19 @@ export default class newsContent extends Component {
     </div>)
     }
 
-);
-    this.props.loader(false)
-   
+)},()=>this.props.loader(false))
+
+    
+  
     
     }
-    );
+    )}
+    catch(error){
+        if(error.name === "Error"){
+        console.log(error.name ,": Error Message : ",error.message)
+        }
+        //try catch - if x works nice if something goes wrong do this
+    }
    
        
         
@@ -110,7 +143,7 @@ export default class newsContent extends Component {
                 this.loadPagedata()
 
             })
-            console.log("newscont mounted")
+            
         }
     }
     windowToTop = () =>{
@@ -137,7 +170,7 @@ export default class newsContent extends Component {
         
             <>
             <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 bg-white text-black dark:text-white dark:bg-black">
-    {this.newsContdata}
+    {this.state.newsContdata}
     
     </div>
     <div className='flex justify-center w-full mt-auto'>

@@ -79,17 +79,22 @@ export default class App extends Component {
        
   }
   passCategory = (category) =>{
+    
     this.setState({category: category,loader: true},async ()=>{console.log(this.state.category)
           console.log("called loader in App.category")
     // this.setState({category:(await fetch(`api/news?section=${this.state.category}`)).json().results.length <=0 ?  "missing" : this.state.category}
   
   //)
-  
-  const res = await fetch(`/api/news?section=${this.state.category}&page=1`)
+  console.log("received category : ",this.state.category)
+  const res = await fetch(`/api/news?page=1${this.state.category !== "all" ? `&section=${this.state.category}` : ""}`)
   const data = await res.json()
   console.log("category length : ",data.response.total)
+
   if(data.response.total<=0){
   this.setState({page:"Inactive"})
+   setTimeout(()=>{
+    this.setState({loader: false})
+  },350)
   }
   else{
     this.setState({page:"Active"})
