@@ -11,8 +11,8 @@ export default class Plans extends Component {
         this.windowToTop()
         this.props.loader(true)
         setTimeout(()=>{this.props.loader(false)},350)
-        console.log("reached plans")
-     
+        
+      console.log("plans mounted")
     }
   render() {
     return (

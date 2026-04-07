@@ -118,7 +118,7 @@ export default class navbar extends Component {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center text-xl text-heading font-bold whitespace-nowrap">
-             {this.toShowtitle()}
+             {this.props.pageName()}
             </span>
             
           </h4>
@@ -212,7 +212,7 @@ export default class navbar extends Component {
                
           
             </ul>
-             <button  onClick={this.props.logout} className="ml-4 flex right-0 py-1 px-2 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-white dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white">
+             <button  onClick={this.props.logout} className="ml-4 flex right-0 py-1 px-2 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-200 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white">
             Log out
           </button>
            

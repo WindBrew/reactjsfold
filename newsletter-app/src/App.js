@@ -21,11 +21,12 @@ import {
 
 import React, { Component } from "react";
 
-//next step is to divide this logic in utils file
+
 //usable logic shall live there with easy readibility
-//no fuss or confusion easy to maintain and modify and debug
-//and is sustained by itself when complexity increases
-//tomorrow is a journey not to build as you reached
+//no fuss or confusion easy to maintain and modify and !ebug
+//and isloggedIn && <Navigate to="/" replace />
+// sustained by itself when complexity increases!//tomorrow isloggedIn && <Navigate to="/" replace />
+// a journey not to build as you reached
 //the peak a new level unlocked well thats the point
 //new level (btw keep it readable code easy to understand)
 //a journey of rearrangement and organizing what we built
@@ -57,8 +58,9 @@ export default class App extends Component {
   
   setMails = (mails)=>{
     //react setState runs like setState(updates , callback) why call back?
-    //so that the function doesnt run too soon on the old state but runs after the 
-// state is updated , useful for state dependant functions to run instantly instead
+    //so that the function doesnt run too soon on the old state but runs after th! 
+// state isloggedIn && <Navigate to="/" replace />
+// updated , useful for state dependant functions to run instantly instead
 //of needing a second run to act on the updated state
 //just runs a function after the state updates , avoids reading prev state and only updated state
 // for state reliant functions  
@@ -78,8 +80,9 @@ export default class App extends Component {
     
   }
     planPage = (bool) =>{// using arrow funcs ensure
-      // your this is bound to parent (app)
-      //else it passes an error that this is not found
+      
+      //else it passes an erro! that this isloggedIn && <Navigate to="/" replace />
+      // not found
       //a normal planPage(){} would not bind this to parent
       //but a planPage = () =>{} some react magic 
       
@@ -129,6 +132,9 @@ setTheme = () =>{
   else if(fetchTheme() === ""){
     document.documentElement.classList.remove("dark")
   }
+  else{
+    document.documentElement.classList.remove("dark")
+  }
     
     }
   )
@@ -142,22 +148,23 @@ doLoad = (load) =>{
 componentDidMount(){
   if(fetchTheme() === "dark"){
     document.documentElement.classList.add("dark") 
-    this.setState({dark: true})
+   
+    this.setState({dark: true},()=>saveTheme(this.state.dark))
   }
 }
 toShowtitle = () =>{
   return(
-  [...this.state.webTitle].map((item)=>{
+  [...this.state.webTitle].map((item,index)=>{
    if(["N","1","0"].includes(item)){
-    return (<span className="text-red-800 text-3xl">{item}</span>)
+    return (<span className="text-red-800 text-3xl" key={index}>{item}</span>)
 
    }
   else if(["B","y"].includes(item)){
-    return (<span className="text-blue-600 text-2xl">{item}</span>)
+    return (<span className="text-blue-600 text-2xl" key={index}>{item}</span>)
 
    }
    else{
-    return (<span className="text-xl">{item}</span>)
+    return (<span className="text-xl" key={index}>{item}</span>)
 
    }
   
@@ -171,9 +178,15 @@ toShowtitle = () =>{
     //add a no news page for empty categories as some categories 
     // aren't always updated with new news
     //if you want the child to access the parents funcs return value
-    //passing it in prop as func() is valid else always pass the func without calling it via ()
+    //passing it in pro! as func() isloggedIn && <Navigate to="/" replace />
+    // valid else always pass the func without calling it via ()
     //in cases where the parent has to pass args wrap it in a ()=>{func(args)} while sending as props
-    //
+    // //      {/* {this.state.isloggedIn ? 
+    //      (this.state.togglePlanNews==="News"? 
+    //       (<Navigate to="/NewsPage"/>) : (<Navigate to="/Plans"/>)
+        
+    //       ) : (<Navigate to="/"/>)
+    // } switching to conditional rendering as this renders every re render in the back */}
     return (
       <Router>
       <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
@@ -183,17 +196,27 @@ toShowtitle = () =>{
       {this.state.loader && <Loader/>}
      
         <Routes>
-        <Route path="/" index element = {<StartPage webTitle="NewsBy10Tacles" mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
+        <Route path="/" index element = {<StartPage pageTitle={this.toShowtitle} mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
-        <Route path="/NewsPage" element={<><Navbar webTitle = "NewsBy10Tacles"  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
+        <Route path="/NewsPage" element={<><Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
         </Routes>
-       {this.state.isloggedIn ? 
-         (this.state.togglePlanNews==="News"? 
-          (<Navigate to="/NewsPage"/>) : (<Navigate to="/Plans"/>)
-        
-          ) : (<Navigate to="/"/>)
-    }
+ 
+    {!this.state.isloggedIn && (<Navigate to="/" replace />)}
+    {this.state.isloggedIn &&
+         this.state.togglePlanNews==="News" &&
+          (<Navigate to="/NewsPage" replace />) }
+          {this.state.isloggedIn &&
+         this.state.togglePlanNews==="Plans" &&
+          (<Navigate to="/Plans" replace />) 
+          /* prefer conditional rendering over ? : ternary as it re renders everything each 
+          re-render 
+          i was suggested to look at using window.location.href instead so i shall
+          look into it in later sessions
+          //signing off :) Tue 7 Apr 2026 5:57AM
+          */
+          }
+    
       </div>
       
       </Router>
@@ -203,4 +226,5 @@ toShowtitle = () =>{
 }
 
 // note for nextt togglePlanNews - store login status in local storage add multiple subscribers and make the plans page pop up if 
-// subscription status is not sub and add loading checking api status and element loaded ? if no show loading
+// subscrip!ion status isloggedIn && <Navigate to="/" replace />
+// not sub and add loading checking api status and element loaded ? if no show loading

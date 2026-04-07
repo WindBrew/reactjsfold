@@ -1,15 +1,17 @@
 import { Component } from "react";
 
 export default class modetoggle extends Component {
-    componentDidMount(){
-        console.log(this.props)
-    }
+   
     render(){
         return(
-              <div className={`${this.props.toggleplanCheck === "Plans" ? "top-2 right-0" : "top-4 right-[40%]"} absolute z-50`}> 
+              <div className={`${this.props.toggleplanCheck === "Plans" ? "top-2 right-0" : "top-4 right-[40%]"} fixed z-50`}> 
                    <span className="px-4">Light</span>
                 <button
-      onClick={this.props.switchTheme}// faced a syntaxx issue for future ref
+                //use target blur when u dont want the button to be focused on
+                //issue i faced :
+                //after toggling mode the enter key at start page instead of submission kept toggling
+                //mode i.e. it was focused and blur unfocuses the target
+      onClick={(e)=>{e.target.blur(); this.props.switchTheme()}}// faced a syntaxx issue for future ref
       // i did onClick={()=>func} valid when u do ()=>func() but because we already
       //sent a func theres no need to wrap it in another func that would just give the funcs val
       //not execute it like it will when we dont use the arrow func in onClick
