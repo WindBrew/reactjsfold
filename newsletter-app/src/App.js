@@ -12,6 +12,7 @@ import {counterInitiate} from "./components/utils/counter";
 import { setSub } from "./components/utils/setSubscriber";
 import { expirationTimer } from "./components/utils/expiration";
 import Modetoggle from "./components/ui/modetoggleswitch";
+import InactivePage from "./components/ui/InactivePage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -45,7 +46,9 @@ export default class App extends Component {
      isloggedIn: false,
      category: "",
      dark: false,
-     webTitle: "NewsBy10Tacles"
+     webTitle: "NewsBy10Tacles",
+     page: "Active"
+
       }
       get user(){ // use get func when u dont wanna pass parameters and call it directly
         //not preffered for complex funcs as it can be confusing
@@ -76,7 +79,24 @@ export default class App extends Component {
        
   }
   passCategory = (category) =>{
-    this.setState({category: category},()=>console.log(this.state.category))  
+    this.setState({category: category,loader: true},async ()=>{console.log(this.state.category)
+          console.log("called loader in App.category")
+    // this.setState({category:(await fetch(`api/news?section=${this.state.category}`)).json().results.length <=0 ?  "missing" : this.state.category}
+  
+  //)
+  
+  const res = await fetch(`/api/news?section=${this.state.category}&page=1`)
+  const data = await res.json()
+  console.log("category length : ",data.response.total)
+  if(data.response.total<=0){
+  this.setState({page:"Inactive"})
+  }
+  else{
+    this.setState({page:"Active"})
+  }
+    }
+  ) 
+
     
   }
     planPage = (bool) =>{// using arrow funcs ensure
@@ -143,6 +163,7 @@ setTheme = () =>{
 
 doLoad = (load) =>{
   this.setState({loader: load})
+
  
 }
 componentDidMount(){
@@ -197,6 +218,7 @@ toShowtitle = () =>{
       {this.state.loader && <Loader/>}
      
         <Routes>
+          <Route path="/InactivePage" element = {<><InactivePage loader={this.doLoad} load={this.state.load}/> <Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> </>}/>
         <Route path="/" index element = {<StartPage pageTitle={this.toShowtitle} mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
         <Route path="/NewsPage" element={<><Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
@@ -204,12 +226,10 @@ toShowtitle = () =>{
         </Routes>
  
     {!this.state.isloggedIn && (<Navigate to="/" replace />)}
-    {this.state.isloggedIn &&
-         this.state.togglePlanNews==="News" &&
-          (<Navigate to="/NewsPage" replace />) }
-          {this.state.isloggedIn &&
-         this.state.togglePlanNews==="Plans" &&
-          (<Navigate to="/Plans" replace />) 
+    {this.state.isloggedIn && this.state.page !== "Inactive" &&
+         this.state.togglePlanNews==="News" && (<Navigate to="/NewsPage" replace />) }
+          {this.state.isloggedIn && 
+          this.state.togglePlanNews==="Plans" && (<Navigate to="/Plans" replace />) 
           /* prefer conditional rendering over ? : ternary as it re renders everything each 
           re-render 
           i was suggested to look at using window.location.href instead so i shall
@@ -217,6 +237,7 @@ toShowtitle = () =>{
           //signing off :) Tue 7 Apr 2026 5:57AM
           */
           }
+          {this.state.page === "Inactive" && (<Navigate to="/InactivePage" replace/>)}
     
       </div>
       

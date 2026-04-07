@@ -13,6 +13,7 @@ export default class startPage extends Component {
       this.windowToTop()
        console.log("startpage mounted")
       this.props.loader(true)
+          console.log("called loader in plans")
       setTimeout(()=>{
         this.props.loader(false)
       },300)

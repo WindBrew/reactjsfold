@@ -25,7 +25,7 @@ export default class newsContent extends Component {
     get apikey  () {return process.env.REACT_APP_NEWSLETTER_APIKEY}
     
     nextCheck = async () =>{
-        const res =  await fetch(`/api/news?page=${this.state.page+1}`)
+        const res =  await fetch(`/api/news?page=${this.state.page+1}${this.props.category && this.props.category !== "all" ? `&section=${this.props.category}` : ""}`)
         this.localdata = await res.json()
         console.log(this.localdata.response.results.length)
         this.setState({lastPage: this.localdata.response.results.length === 0 || this.state.page > 4},()=>{console.log(this.state.lastPage)
@@ -36,6 +36,7 @@ export default class newsContent extends Component {
     }
   loadPagedata = async () =>{
         this.props.loader(true)
+            console.log("called loader in newspage")
       
 
           const res =  await fetch(`/api/news?page=${this.state.page}${this.props.category && this.props.category !== "all" ? `&section=${this.props.category}` : ""}`)
