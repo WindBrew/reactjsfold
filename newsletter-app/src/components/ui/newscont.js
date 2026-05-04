@@ -151,12 +151,12 @@ export default class newsContent extends Component {
     }
     
     handlePrev = async () => {
-      this.setState(prevState=>({page : prevState.page <= 1 ? prevState.page : prevState.page-1}),()=>{ this.loadPagedata(); this.windowToTop(); this.setState({lastPage: false})})
+      this.setState(prevState=>({page : prevState.page <= 1 ? prevState.page : prevState.page-1}),()=>{ this.loadPagedata(); this.windowToTop(); this.setState({lastPage: false}); this.props.passPage(this.state.page)})
      
 
     }
     handleNext = async () => {
-       this.setState(prevState=>({page : prevState.lastPage ? prevState.page : prevState.page+1}),()=>{ this.loadPagedata(); this.windowToTop();   this.nextCheck(); })
+       this.setState(prevState=>({page : prevState.lastPage ? prevState.page : prevState.page+1}),()=>{ this.loadPagedata(); this.windowToTop();   this.nextCheck(); this.props.passPage(this.state.page)})
       
     }
     

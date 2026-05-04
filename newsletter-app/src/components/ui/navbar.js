@@ -5,6 +5,7 @@ export default class navbar extends Component {
    toggles = () =>{
     this.props.planToggle("Plans")
    }
+   //to fix that categories modal stays open even after page is next or prev clicked
    state = {
     categories : false,
     active: "All",
@@ -50,6 +51,11 @@ export default class navbar extends Component {
       this.props.category('sport')
       
     }
+}
+componentDidUpdate(prevProp){
+  if (prevProp.page !== this.props.page){
+    this.setState({categories: false})
+  } 
 }
 // explained reduce and some function nature here  
 //toDesignTitle = () =>{

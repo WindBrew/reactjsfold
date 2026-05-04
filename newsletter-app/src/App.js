@@ -47,7 +47,8 @@ export default class App extends Component {
      category: "",
      dark: false,
      webTitle: "NewsBy10Tacles",
-     page: "Active"
+     page: "Active",
+     modalToggler: ""
 
       }
       get user(){ // use get func when u dont wanna pass parameters and call it directly
@@ -78,7 +79,9 @@ export default class App extends Component {
          
        
   }
-  
+  toggleModal = (page) =>{
+    this.setState({modalToggler: page})
+  }
   passCategory = (category) =>{
     
     this.setState({category: category,loader: true},async ()=>{console.log(this.state.category)
@@ -230,7 +233,7 @@ toShowtitle = () =>{
           <Route path="/InactivePage" element = {<><InactivePage loader={this.doLoad} load={this.state.load}/> <Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> </>}/>
         <Route path="/" index element = {<StartPage pageTitle={this.toShowtitle} mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
-        <Route path="/NewsPage" element={<><Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
+        <Route path="/NewsPage" element={<><Navbar page={this.state.modalToggler} pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent passPage={this.toggleModal} category={this.state.category} loader = {this.doLoad}/>  </>}/>  
         <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} logout = {()=>logout(this,saveData)} loader = {this.doLoad}/> }/>
         </Routes>
  
