@@ -156,7 +156,7 @@ export default class navbar extends Component {
                 <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : this.state.categories ? false : true})}}>Categories</span>
                 {"   "}
                 {
-                this.state.categories && <div className="absolute bg-gray-200/95 dark:bg-gray-900/95 border-none rounded-md p-4">
+                this.state.categories && <div className="absolute bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
                   <div className="grid text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
                     {this.loadCategories()}
                     </div>
