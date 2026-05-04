@@ -110,8 +110,8 @@ export default class navbar extends Component {
    )}
   render() {
     return (
-      <div className="w-full  bg-white text-black dark:text-white dark:bg-black fixed z-40 ">
-      <nav className={`  w-full  top-0 start-0 shadow-lg dark:shadow-gray-900 dark:shadow-md `}>
+      <div className="w-full  bg-stone-100 text-black dark:text-white dark:bg-slate-900 fixed z-40 ">
+      <nav className={`  w-full  top-0 start-0 shadow-lg dark:shadow-gray-800 dark:shadow-md `}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <h4
             
@@ -212,7 +212,7 @@ export default class navbar extends Component {
                
           
             </ul>
-             <button  onClick={this.props.logout} className="ml-4 flex right-0 py-1 px-2 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-200 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white">
+             <button  onClick={this.props.logout} className="ml-4 flex right-0 py-1 px-2 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white">
             Log out
           </button>
            

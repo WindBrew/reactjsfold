@@ -78,6 +78,7 @@ export default class App extends Component {
          
        
   }
+  
   passCategory = (category) =>{
     
     this.setState({category: category,loader: true},async ()=>{console.log(this.state.category)
@@ -219,7 +220,7 @@ toShowtitle = () =>{
     // } switching to conditional rendering as this renders every re render in the back */}
     return (
       <Router>
-      <div className=" bg-white text-black h-full dark:bg-black dark:text-white w-full flex-[1_0_auto]">
+      <div className=" bg-gray-200 text-black h-full dark:bg-gray-900 dark:text-white w-full flex-[1_0_auto]">
     
      <Modetoggle darkCheck={this.state.dark} loginStat={this.state.isloggedIn} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
       
@@ -230,7 +231,7 @@ toShowtitle = () =>{
         <Route path="/" index element = {<StartPage pageTitle={this.toShowtitle} mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
       
         <Route path="/NewsPage" element={<><Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent category={this.state.category} loader = {this.doLoad}/>  </>}/>  
-        <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} loader = {this.doLoad}/>}/>
+        <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} logout = {()=>logout(this,saveData)} loader = {this.doLoad}/> }/>
         </Routes>
  
     {!this.state.isloggedIn && (<Navigate to="/" replace />)}

@@ -4,7 +4,7 @@ export default class modetoggle extends Component {
    
     render(){
         return(
-              <div className={`${!this.props.loginStat || this.props.toggleplanCheck === "Plans" ? "top-2 right-0" : "top-4 right-[40%]"} fixed z-50`}> 
+              <div className={`${!this.props.loginStat ? "top-2 right-[1%]" : this.props.toggleplanCheck === "Plans" ? "top-4 right-[8%]" : "top-4 right-[40%]"} fixed z-50`}> 
                    <span className="px-4">Light</span>
                 <button
                 //use target blur when u dont want the button to be focused on

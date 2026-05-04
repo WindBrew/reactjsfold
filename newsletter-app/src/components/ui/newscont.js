@@ -88,7 +88,7 @@ export default class newsContent extends Component {
          //or use window.open works just the same like a href how does it open link in a new tab?
          //same way we use target blank in html 
 
-             {return ( <div onClick={()=>{window.open(item.webUrl,"_blank")}} key={item.webUrl}  className={`dark:shadow-gray-700 dark:shadow-sm dark:bg-black dark:text-white cursor-pointer rounded-xl shadow-md py-2shadow-sm border-gray-700 border-[1px] overflow-hidden`}>
+             {return ( <div onClick={()=>{window.open(item.webUrl,"_blank")}} key={item.webUrl}  className={`bg-stone-300 dark:shadow-gray-700 dark:shadow-sm dark:bg-[#10151c]  cursor-pointer rounded-xl shadow-md pb-2 shadow-sm border-gray-400 dark:border-none border-[1px] overflow-hidden`}>
         <div className="relative">
             <img className="w-full h-48 object-cover" src={item.fields.thumbnail ? item.fields.thumbnail : noimg} alt="newsImage" />
             {this.checkNew(item.fields.lastModified) <= 1 &&
@@ -97,12 +97,12 @@ export default class newsContent extends Component {
                 New
             </div>
              }
-            <div className="absolute bottom-0 right-0 bg-gray-800 text-white pbgx-2 py-1 m-2 rounded-md text-xs">{Math.ceil(item.fields.wordcount /200)} min's read
+            <div className="absolute bottom-0 right-0 bg-gray-800/70 text-white pbgx-2 px-2  dark:bg-gray-500/70 dark:text-white  py-1 m-2 rounded-md text-xs">{Math.ceil(item.fields.wordcount /200)} min's read
             </div>
         </div>
         <div className="p-4">
-            <div className="text-lg font-medium text-gray-800 mb-2 ">{item.webTitle}</div>
-            <p className="text-gray-500 text-sm">{item.fields.trailText ? item.fields.trailText : "no description..." }</p>
+            <div className="text-lg font-medium text-stone-900 dark:text-stone-300 mb-2 ">{item.webTitle}</div>
+            <p className="text-gray-800 dark:text-stone-400 text-sm">{item.fields.trailText ? item.fields.trailText : "no description..." }</p>
         </div>
     </div>)
     }
@@ -166,10 +166,10 @@ export default class newsContent extends Component {
    
     return (
       
-      <div className='flex flex-col pt-[70px] w-full h-full'>
+      <div className='flex flex-col pt-[70px] w-full h-full dark:bg-gray-900'>
         
             <>
-            <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 bg-white text-black dark:text-white dark:bg-black">
+            <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 dark:text-white dark:bg-gray-900">
     {this.state.newsContdata}
     
     </div>
