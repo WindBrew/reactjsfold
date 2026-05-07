@@ -119,6 +119,7 @@ export default class App extends Component {
       //but a planPage = () =>{} some react magic 
       
         this.setState({togglePlanNews: bool})// displays plan page 
+        this.setState({page: "Active"})
         
     }
   
@@ -135,6 +136,7 @@ export default class App extends Component {
       
       console.log("reachingMatched")
         console.log("matched")
+        this.setState({category: this.state.page === "Active" ? "all" : this.state.category})
         this.setState({togglePlanNews: "News"}
 
         ) // made home page display
@@ -226,15 +228,24 @@ toShowtitle = () =>{
       <div className=" bg-gray-200 text-black h-full dark:bg-gray-900 dark:text-white w-full flex-[1_0_auto]">
     
      <Modetoggle darkCheck={this.state.dark} loginStat={this.state.isloggedIn} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
-      
+      {this.state.isloggedIn && this.state.togglePlanNews === "News" && <Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> 
+  }
       {this.state.loader && <Loader/>}
      
         <Routes>
-          <Route path="/InactivePage" element = {<><InactivePage loader={this.doLoad} load={this.state.load}/> <Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> </>}/>
+          <Route path="/InactivePage" element = {<><InactivePage loader={this.doLoad} load={this.state.load}/></>}/>
         <Route path="/" index element = {<StartPage pageTitle={this.toShowtitle} mailtoparent = {this.setMails} loader = {this.doLoad} />}/>
-      
-        <Route path="/NewsPage" element={<><Navbar page={this.state.modalToggler} pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> <NewsContent passPage={this.toggleModal} category={this.state.category} loader = {this.doLoad}/>  </>}/>  
-        <Route path="/Plans" element={<Plans planStats = {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} logout = {()=>logout(this,saveData)} loader = {this.doLoad}/> }/>
+
+        <Route path="/NewsPage" element={<>
+   
+           <NewsContent passPage={this.toggleModal} 
+           category={this.state.category}
+            loader = {this.doLoad}/> 
+             </>}/>  
+        <Route path="/Plans" 
+        element={<Plans planStats = 
+        {(planrecv,expiry)=>planData(planrecv,expiry,this,saveData)} 
+        logout = {()=>logout(this,saveData)} loader = {this.doLoad}/> }/>
         </Routes>
  
     {!this.state.isloggedIn && (<Navigate to="/" replace />)}
@@ -249,7 +260,7 @@ toShowtitle = () =>{
           //signing off :) Tue 7 Apr 2026 5:57AM
           */
           }
-          {this.state.page === "Inactive" && (<Navigate to="/InactivePage" replace/>)}
+          {this.state.isloggedIn &&  this.state.page === "Inactive" && (<Navigate to="/InactivePage" replace/>)}
     
       </div>
       

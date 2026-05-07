@@ -10,7 +10,9 @@
         
         togglePlanNews: "Plans",
         loader: true, 
-        isloggedIn: false
+        isloggedIn: false,
+        category: "all",
+        page:"Active"
       }
 
       

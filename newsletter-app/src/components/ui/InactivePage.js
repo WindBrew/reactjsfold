@@ -19,7 +19,7 @@ export default class InactivePage extends Component{
     }
     render(){
         return(
-            <div className="flex fixed w-full h-full justify-center items-center  bg-white text-gray-700 dark:bg-black dark:text-gray-300">
+            <div className="flex fixed w-full h-full justify-center items-center  bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
                  <div className="text-center">
                     <h1 className="text-4xl font-black " >No New News</h1>
                 <br/>

@@ -4,6 +4,7 @@ import { NavLink} from "react-router-dom";
 export default class navbar extends Component {
    toggles = () =>{
     this.props.planToggle("Plans")
+    
    }
    //to fix that categories modal stays open even after page is next or prev clicked
    state = {
