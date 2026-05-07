@@ -228,7 +228,7 @@ toShowtitle = () =>{
       <div className=" bg-gray-200 text-black h-full dark:bg-gray-900 dark:text-white w-full flex-[1_0_auto]">
     
      <Modetoggle darkCheck={this.state.dark} loginStat={this.state.isloggedIn} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
-      {this.state.isloggedIn && this.state.togglePlanNews === "News" && <Navbar pageName = {this.toShowtitle}  category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> 
+      {this.state.isloggedIn && this.state.togglePlanNews === "News" && <Navbar pageName = {this.toShowtitle} page={this.state.modalToggler} category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> 
   }
       {this.state.loader && <Loader/>}
      

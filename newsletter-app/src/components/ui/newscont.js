@@ -141,6 +141,8 @@ export default class newsContent extends Component {
             this.setState({page: 1},()=>{
                  this.windowToTop()
                 this.loadPagedata()
+                this.props.passPage(this.state.page)
+
 
             })
             
