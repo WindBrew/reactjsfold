@@ -135,7 +135,7 @@ componentDidUpdate(prevProp){
           <Hamburgerbutton className="h-6 w-6 right-2 top-2 dark:text-white" onClick={()=>this.setState({menu: !this.state.menu})}/>
           {
             this.state.menu && 
-            <div id="dropdownDelay" className="z-30 bg-gray-200/90  dark:bg-gray-800/90 rounded-xl right-[2%] h-auto fixed shadow-lg w-auto">
+            <div id="dropdownDelay" className="z-30 bg-gray-300/90  dark:bg-gray-800/90 rounded-xl right-[2%] top-[7%] w-42 h-auto fixed shadow-lg w-auto">
               <ul className="p-2 space-y-2 text-sm text-body text-center font-lg" aria-labelledby="dropdownDelayButton">
                <li onClick={this.toggles}>
                 Plans
