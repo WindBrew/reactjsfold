@@ -88,7 +88,7 @@ export default class newsContent extends Component {
          //or use window.open works just the same like a href how does it open link in a new tab?
          //same way we use target blank in html 
 
-             {return ( <div onClick={()=>{window.open(item.webUrl,"_blank")}} key={item.webUrl}  className={`bg-stone-300 dark:shadow-gray-700 dark:shadow-sm dark:bg-[#10151c]  cursor-pointer rounded-xl shadow-md pb-2 shadow-sm border-gray-400 dark:border-none border-[1px] overflow-hidden`}>
+             {return ( <div onClick={()=>{window.open(item.webUrl,"_blank")}} key={item.webUrl}  className={`transition-all duration-500 bg-stone-300 dark:shadow-gray-700 dark:shadow-sm dark:bg-[#10151c]  cursor-pointer rounded-xl shadow-md pb-2 shadow-sm border-gray-400 dark:border-none border-[1px] overflow-hidden`}>
         <div className="relative">
             <img className="w-full h-48 object-cover" src={item.fields.thumbnail ? item.fields.thumbnail : noimg} alt="newsImage" />
             {this.checkNew(item.fields.lastModified) <= 1 &&

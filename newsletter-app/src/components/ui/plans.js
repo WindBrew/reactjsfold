@@ -20,11 +20,12 @@ export default class Plans extends Component {
   render() {
     return (
 
-      <>
+      <div className="w-full">
        <button  onClick={this.props.logout} className="ml-4 fixed flex right-[1%] py-2 my-2 px-2 rounded-xl font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white">
             Log out
           </button>
-    <div className="py-20 max-w-5xl min-h-screen mx-auto px-4 dark:bg-gray-900">
+    <div className="py-20 max-w-5xl min-h-screen mx-auto px-4 ">{/* If you add dark:color to an element
+     and parent seperately they will transition at different times might look meh */}
     <h1 className="text-center text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">Pricing</h1>
     <p className="text-center text-gray-400 md:text-lg mt-2">Use it for free for yourself, upgrade when your team needs
         advanced control.</p>
@@ -252,7 +253,7 @@ export default class Plans extends Component {
     </div>
 </div>
 
-</>
+</div>
 
     )
   }

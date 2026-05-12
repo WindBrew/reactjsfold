@@ -1,11 +1,13 @@
 import { Component } from "react";
+import lighticon from "../media/lighticon.svg";
+import darkicon from "../media/darkicon.svg";
 
 export default class modetoggle extends Component {
    
     render(){
         return(
-              <div className={`${!this.props.loginStat ? "top-2 right-[1%]" : this.props.toggleplanCheck === "Plans" ? "top-4 right-[8%]" : "top-4 right-[40%]"} fixed z-50`}> 
-                   <span className="px-4">Light</span>
+              <div className={`${!this.props.loginStat ? "top-2 right-[1%]" : this.props.toggleplanCheck === "Plans" ? "lg:right-[8%] top-4 md:right-[10%] right-[50%]" : "top-4 lg:right-[24%] md:right-[39%] right-[12%]"} fixed z-50`}> 
+                  
                 <button
                 //use target blur when u dont want the button to be focused on
                 //issue i faced :
@@ -20,17 +22,19 @@ export default class modetoggle extends Component {
 // it fires on render instantly, child's arrow cant undo it
 // child just holds the return value (usually undefined) not the func itself
       
-      className={`relative inline-flex items-center w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none ${
-        this.props.darkCheck ? "bg-blue-900" : "bg-yellow-300"
-      }`}
+      // className={`relative inline-flex items-center w-12 h-7 rounded-full transition-colors duration-600 focus:outline-none ${
+      //   this.props.darkCheck ? "bg-blue-900" : "bg-yellow-300"
+      // }`}
     >
       <span
-        className={`inline-block w-3 h-3 bg-slate-200 rounded-full shadow transform transition-transform duration-300 ${
-          this.props.darkCheck ? "translate-x-7" : "translate-x-1"
-        }`}
-      />
+        // className={`inline-block w-5 h-5 bg-slate-200 rounded-full shadow transform transition-transform duration-300 ${
+        //   this.props.darkCheck ? "translate-x-6" : "translate-x-1"
+        // }`}
+        >
+        <img className={`rounded-full h-8 w-8 p-[5px] ${!this.props.darkCheck ? "bg-stone-300" : "bg-gray-800"}`} src={this.props.darkCheck ? lighticon : darkicon} alt="dark/light switch"/>
+      </span>
     </button>
-    <span className="px-4">Dark</span>
+  
               </div>
         )
     }

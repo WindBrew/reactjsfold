@@ -160,12 +160,10 @@ setTheme = () =>{
   this.setState({dark: !this.state.dark},
     ()=>{saveTheme(this.state.dark);
     console.log("toggling func");
-    if(fetchTheme() === "dark"){
+    if(this.state.dark === true){
     document.documentElement.classList.add("dark")
     }
-  else if(fetchTheme() === ""){
-    document.documentElement.classList.remove("dark")
-  }
+  
   else{
     document.documentElement.classList.remove("dark")
   }
