@@ -113,7 +113,7 @@ componentDidUpdate(prevProp){
     this.state.cats.map(item=>{
                 return(
                       <div className={`${this.state.active === item ? "text-blue-900" : ""} hover:text-blue-700 hover:cursor-pointer`} 
-                      onClick={(e)=>{this.passCategory(e); this.setState({categories: false})}}>{item}</div>
+                      onClick={(e)=>{this.passCategory(e); this.setState({categories: false,menu: false})}}>{item}</div>
                     
      ) })
    )}
@@ -132,12 +132,12 @@ componentDidUpdate(prevProp){
             
           </h4>
           <div className="md:hidden" >
-          <Hamburgerbutton className="h-6 w-6 right-2 top-2 dark:text-white" onClick={()=>this.setState({menu: !this.state.menu})}/>
+          <Hamburgerbutton className="h-8 w-8 right-2 top-2 dark:text-white" onClick={()=>{this.setState({menu: !this.state.menu, categories: !this.state.menu ? false : ""});}}/>
           {
             this.state.menu && 
-            <div id="dropdownDelay" className="z-30 bg-gray-300/90  dark:bg-gray-800/90 rounded-xl right-[2%] top-[7%] w-42 h-auto fixed shadow-lg w-auto">
-              <ul className="p-2 space-y-2 text-sm text-body text-center font-lg" aria-labelledby="dropdownDelayButton">
-               <li onClick={this.toggles}>
+            <div id="dropdownDelay" className="z-30 bg-gray-300/90  dark:bg-gray-800/90 rounded-xl right-[2%] top-[7%] min-w-42 min-h-58 fixed shadow-lg w-auto">
+              <ul className="p-2 space-y-3 text-sm text-body text-center font-lg" aria-labelledby="dropdownDelayButton">
+               <li onClick={this.toggles} className="border-bottom border-1 ">
                 Plans
                </li>
                <li onClick={()=>{this.setState({categories : this.state.categories ? false : true})}}>
@@ -152,7 +152,7 @@ componentDidUpdate(prevProp){
             </div>
           }
              {
-                this.state.categories && <div className="md:hidden absolute right-[10%]  bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
+                this.state.categories && <div className="md:hidden absolute right-[13%]  bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
                   <div className="grid text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
                     {this.loadCategories()}
                     </div>
@@ -165,11 +165,11 @@ componentDidUpdate(prevProp){
             <ul className=" font-medium flex flex-col md:flex-row  mt-4 border border-default rounded-base bg-neutral-secondary-soft  space-x-8 rtl:space-x-reverse mt-0 border-0 bg-neutral-primary">
              
               <li>
-                <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : this.state.categories ? false : true})}}>Categories</span>
+                <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : !this.state.categories})}}>Categories</span>
                 {"   "}
                 {
-                this.state.categories && <div className="absolute bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
-                  <div className="grid text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
+                this.state.categories && <div className="absolute right-[10%] bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
+                  <div className="grid  text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
                     {this.loadCategories()}
                     </div>
                       </div>
