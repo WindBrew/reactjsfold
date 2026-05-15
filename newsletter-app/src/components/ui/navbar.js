@@ -10,6 +10,7 @@ export default class navbar extends Component {
    //to fix that categories modal stays open even after page is next or prev clicked
    state = {
     categories : false,
+    prevActive: "All",
     active: "All",
     cats: ["All",
       'World',
@@ -45,8 +46,21 @@ export default class navbar extends Component {
    //add lowercaser for  rest of e.target.content
   
   passCategory = (e) => {
-    this.setState({active: e.target.textContent})
-    if (e.target.textContent !== 'Sports'){
+    this.setState({active: e.target.textContent},()=>{
+    if(this.state.prevActive === this.state.active)
+      {
+        //temp load no category passed 
+        // i can directly trigger fetch to fetch the same category again when its clicked
+        //but because im using a free api with limited queries
+        //its more efficient to not fetch so often but in a real scenario
+        //its efficient to trigger fetch on every category click even if its the same category 
+        this.props.loader(true)
+        setTimeout(()=>this.props.loader(false),350)
+      }  
+      else{
+        this.setState({prevActive: this.state.active})
+           if (e.target.textContent !== 'Sports'){
+
     this.props.category(e.target.textContent.toLowerCase())
     
     }
@@ -54,6 +68,9 @@ export default class navbar extends Component {
       this.props.category('sport')
       
     }
+      }
+    })
+ 
 }
 componentDidUpdate(prevProp){
   if (prevProp.page !== this.props.page){
@@ -131,11 +148,11 @@ componentDidUpdate(prevProp){
             </span>
             
           </h4>
-          <div className="md:hidden" >
-          <Hamburgerbutton className="h-8 w-8 right-2 top-2 dark:text-white" onClick={()=>{this.setState({menu: !this.state.menu, categories: !this.state.menu ? false : ""});}}/>
+          <div className="md:hidden " >
+          <Hamburgerbutton className="h-8 w-8 absolute right-2 top-3 dark:text-white" onClick={()=>{this.setState({menu: !this.state.menu, categories: !this.state.menu ? false : ""});}}/>
           {
             this.state.menu && 
-            <div id="dropdownDelay" className="z-30 bg-gray-300/90  dark:bg-gray-800/90 rounded-xl right-[2%] top-[7%] min-w-42 min-h-58 fixed shadow-lg w-auto">
+            <div id="dropdownDelay" className="z-30 bg-gray-300/90  dark:bg-gray-800/90 rounded-xl right-[2%] top-[8%] min-w-[88px] min-h-58 fixed shadow-lg w-auto">
               <ul className="p-2 space-y-3 text-sm text-body text-center font-lg" aria-labelledby="dropdownDelayButton">
                <li onClick={this.toggles} className="border-bottom border-1 ">
                 Plans
@@ -151,15 +168,18 @@ componentDidUpdate(prevProp){
             
             </div>
           }
+            
+          
+          </div> 
+          <div>
              {
-                this.state.categories && <div className="md:hidden absolute right-[13%]  bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
+                this.state.categories && <div className="md:right-[10%] md:top-[8%] m-2 fixed right-[13%]  bg-gray-200/85 dark:bg-gray-800/95 border-none rounded-md p-4">
                   <div className="grid text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
                     {this.loadCategories()}
                     </div>
                       </div>
                       }
-          
-          </div> 
+          </div>
           <div className="hidden select-none md:flex  md:w-auto  " id="navbar-default">
 
             <ul className=" font-medium flex flex-col md:flex-row  mt-4 border border-default rounded-base bg-neutral-secondary-soft  space-x-8 rtl:space-x-reverse mt-0 border-0 bg-neutral-primary">
@@ -167,13 +187,7 @@ componentDidUpdate(prevProp){
               <li>
                 <span className="hover:text-blue-900 hover:scale-105 hover:cursor-pointer" onClick={()=>{this.setState({categories : !this.state.categories})}}>Categories</span>
                 {"   "}
-                {
-                this.state.categories && <div className="absolute right-[10%] bg-gray-200/85 dark:bg-gray-900/95 border-none rounded-md p-4">
-                  <div className="grid  text-black dark:text-gray-400 grid-cols-3 span-col-2 gap-x-4 gap-y-4">
-                    {this.loadCategories()}
-                    </div>
-                      </div>
-                      }
+          
                  </li>
               <li >
                 <NavLink to="/Plans"

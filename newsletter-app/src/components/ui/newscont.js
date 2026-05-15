@@ -138,6 +138,7 @@ export default class newsContent extends Component {
     }
     async componentDidUpdate(x){
         if(x.category !== this.props.category){
+            
             this.setState({page: 1},()=>{
                  this.windowToTop()
                 this.loadPagedata()

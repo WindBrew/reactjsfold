@@ -83,16 +83,21 @@ export default class App extends Component {
     this.setState({modalToggler: page})
   }
   passCategory = (category) =>{
-    
-    this.setState({category: category,loader: true},async ()=>{console.log(this.state.category)
+  
+    this.setState({category: category,loader: true},async ()=>{console.log(this.state.category )
           console.log("called loader in App.category")
     // this.setState({category:(await fetch(`api/news?section=${this.state.category}`)).json().results.length <=0 ?  "missing" : this.state.category}
   
   //)
+  
   console.log("received category : ",this.state.category)
+
   const res = await fetch(`/api/news?page=1${this.state.category !== "all" ? `&section=${this.state.category}` : ""}`)
+  // the above line handles the all category cus theres no all category in our api we simply pass nothing when user clicks all categoy
+
   const data = await res.json()
   console.log("category length : ",data.response.total)
+  
 
   if(data.response.total<=0){
   this.setState({page:"Inactive"})
@@ -226,7 +231,7 @@ toShowtitle = () =>{
       <div className=" bg-gray-200 text-black h-full dark:bg-gray-900 dark:text-white w-full flex-[1_0_auto]">
     
      <Modetoggle darkCheck={this.state.dark} loginStat={this.state.isloggedIn} toggleplanCheck={this.state.togglePlanNews} switchTheme = {this.setTheme}/>
-      {this.state.isloggedIn && this.state.togglePlanNews === "News" && <Navbar pageName = {this.toShowtitle} page={this.state.modalToggler} category={this.passCategory} planToggle = {this.planPage} logout = {()=>logout(this,saveData)}/> 
+      {this.state.isloggedIn && this.state.togglePlanNews === "News" && <Navbar pageName = {this.toShowtitle} page={this.state.modalToggler} category={this.passCategory} planToggle = {this.planPage} loader={this.doLoad} logout = {()=>logout(this,saveData)}/> 
   }
       {this.state.loader && <Loader/>}
      
