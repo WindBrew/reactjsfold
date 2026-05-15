@@ -168,24 +168,24 @@ export default class newsContent extends Component {
    
     return (
       
-      <div className='flex flex-col pt-[70px] w-full h-full dark:bg-gray-900'>
+      <div className='flex pb-16 min-h-screen flex-col pt-[70px] w-full h-full dark:bg-gray-900'>
         
             <>
             <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 ml-2 mr-2 py-2 p-4 gap-4 dark:text-white dark:bg-gray-900">
     {this.state.newsContdata}
     
     </div>
-    <div className='flex justify-center w-full mt-auto'>
+    <div className='flex justify-center fixed bottom-2 bg-primary-default w-full mt-auto'>
         <nav className="flex space-x-2.5 justify-between w-full mx-4 my-2 bottom-0 mt-auto">
 
      {this.state.page > 1  &&
-    <button disabled={this.state.page <= 1} className="flex   py-2 px-3 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white"
+    <button disabled={this.state.page <= 1} className=" bg-gray-400/90   py-2 px-3 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300/60 dark:bg-gray-800 transition-colors md:hover:border-blue-600 md:hover:bg-blue-400 md:hover:text-white dark:md:hover:text-white"
         onClick={this.handlePrev}>
         ⪻
         Previous
     </button>  }{!this.state.lastPage && <button disabled={true}></button>}
     {!this.state.lastPage &&
-    <button disabled={this.state.lastPage} className="flex  py-2 px-3 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300 dark:bg-gray-800 transition-colors hover:border-blue-600 hover:bg-blue-400 hover:text-white dark:hover:text-white"
+    <button disabled={this.state.lastPage} className=" bg-gray-400/90 py-2 px-3 rounded font-medium select-none border-none text-gray-900 dark:text-white bg-slate-300/60 dark:bg-gray-800 transition-colors md:hover:border-blue-600 md:hover:bg-blue-400 md:hover:text-white dark:md:hover:text-white"
         onClick={this.handleNext}>
         Next
         ⪼
