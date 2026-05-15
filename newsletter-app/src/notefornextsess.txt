@@ -1,0 +1,1 @@
+minor fix for desktop , space the categories modal menu its sticking to the right wall 
